@@ -33,9 +33,12 @@ function Dashboard() {
     <div className="container-fluid p-4">
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h2>Job Tracker</h2>
-        <button className="btn btn-outline-danger" onClick={handleLogout}>
-          Logout
-        </button>
+        <div>
+          <a href="/add" className="btn btn-primary me-2">+ Add Application</a>
+          <button className="btn btn-outline-danger" onClick={handleLogout}>
+            Logout
+          </button>
+        </div>
       </div>
 
       <div className="row mb-4">
