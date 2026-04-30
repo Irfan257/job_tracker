@@ -1,7 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-function AddApplication() {
+function EditApplication() {
+  const id = window.location.pathname.split('/')[2];
+  const token = localStorage.getItem('access');
+
   const [form, setForm] = useState({
     company_name: '',
     job_role: '',
@@ -14,48 +17,56 @@ function AddApplication() {
 
   const [success, setSuccess] = useState('');
   const [error, setError] = useState('');
-  const token = localStorage.getItem('access');
+
+  useEffect(() => {
+    fetchApplication();
+  }, []);
+
+  const fetchApplication = async () => {
+    try {
+      const response = await axios.get(`http://127.0.0.1:8000/api/applications/${id}/`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      setForm(response.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async () => {
-    if (!form.company_name || !form.job_role || !form.date_applied) {
-      setError('Company name, job role and date applied are required.');
-      return;
-    }
     try {
-      const data = {
-        ...form,
-        job_url: form.job_url || '',
-        follow_up_date: form.follow_up_date || null,
-        notes: form.notes || '',
-      };
-      await axios.post('http://127.0.0.1:8000/api/applications/', data, {
+      await axios.put(`http://127.0.0.1:8000/api/applications/${id}/`, form, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      setSuccess('Application added successfully!');
+      setSuccess('Application updated successfully!');
       setError('');
-      setForm({
-        company_name: '',
-        job_role: '',
-        job_url: '',
-        status: 'Applied',
-        date_applied: '',
-        follow_up_date: '',
-        notes: ''
-      });
     } catch (err) {
       setError('Something went wrong. Please try again.');
       setSuccess('');
     }
   };
 
+  const handleDelete = async () => {
+    if (window.confirm('Are you sure you want to delete this application?')) {
+      try {
+        await axios.delete(`http://127.0.0.1:8000/api/applications/${id}/`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        window.location.href = '/dashboard';
+      } catch (err) {
+        setError('Something went wrong. Please try again.');
+      }
+    }
+  };
+
   return (
     <div className="container mt-4">
       <div className="d-flex justify-content-between align-items-center mb-4">
-        <h3>Add Application</h3>
+        <h3>Edit Application</h3>
         <a href="/dashboard" className="btn btn-outline-secondary">
           Back to Dashboard
         </a>
@@ -66,9 +77,7 @@ function AddApplication() {
         {error && <div className="alert alert-danger">{error}</div>}
 
         <div className="mb-3">
-          <label className="form-label">
-            Company Name <span className="text-danger">*</span>
-          </label>
+          <label className="form-label">Company Name</label>
           <input
             type="text"
             className="form-control"
@@ -79,9 +88,7 @@ function AddApplication() {
         </div>
 
         <div className="mb-3">
-          <label className="form-label">
-            Job Role <span className="text-danger">*</span>
-          </label>
+          <label className="form-label">Job Role</label>
           <input
             type="text"
             className="form-control"
@@ -118,9 +125,7 @@ function AddApplication() {
         </div>
 
         <div className="mb-3">
-          <label className="form-label">
-            Date Applied <span className="text-danger">*</span>
-          </label>
+          <label className="form-label">Date Applied</label>
           <input
             type="date"
             className="form-control"
@@ -136,7 +141,7 @@ function AddApplication() {
             type="date"
             className="form-control"
             name="follow_up_date"
-            value={form.follow_up_date}
+            value={form.follow_up_date || ''}
             onChange={handleChange}
           />
         </div>
@@ -152,15 +157,23 @@ function AddApplication() {
           />
         </div>
 
-        <button
-          className="btn btn-primary w-100"
-          onClick={handleSubmit}
-        >
-          Add Application
-        </button>
+        <div className="d-flex gap-2">
+          <button
+            className="btn btn-primary w-100"
+            onClick={handleSubmit}
+          >
+            Save Changes
+          </button>
+          <button
+            className="btn btn-danger w-100"
+            onClick={handleDelete}
+          >
+            Delete
+          </button>
+        </div>
       </div>
     </div>
   );
 }
 
-export default AddApplication;
+export default EditApplication;

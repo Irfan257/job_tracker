@@ -74,7 +74,11 @@ function Dashboard() {
             <div className="card p-3">
               <h5 className="mb-3">{status}</h5>
               {getByStatus(status).map(app => (
-                <div className="card mb-2 p-2 shadow-sm" key={app.id}>
+                <div className="card mb-2 p-2 shadow-sm"
+                 key={app.id}
+                 style={{ cursor : 'pointer' }}
+                 onClick={() => window.location.href = `/edit/${app.id}`}
+                 >
                   <strong>{app.company_name}</strong>
                   <small className="text-muted d-block">{app.job_role}</small>
                   <small className="text-muted">{app.date_applied}</small>
