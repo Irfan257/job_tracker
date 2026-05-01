@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import StatusChart from '../components/StatusChart';
 
 function Dashboard() {
   const [applications, setApplications] = useState([]);
@@ -46,11 +47,6 @@ function Dashboard() {
       default: return 'secondary';
     }
   };
-
-  const filteredApplications = applications.filter(app =>
-    app.company_name.toLowerCase().includes(search.toLowerCase()) ||
-    app.job_role.toLowerCase().includes(search.toLowerCase())
-  );
 
   return (
     <div className="container-fluid p-4">
@@ -115,6 +111,8 @@ function Dashboard() {
           </select>
         </div>
       </div>
+
+      <StatusChart applications={applications} />
 
       <div className="row">
         {['Applied', 'Interview', 'Offer', 'Rejected'].map(status => (
