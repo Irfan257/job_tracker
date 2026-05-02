@@ -26,7 +26,7 @@ function Register() {
       return;
     }
     try {
-      await axios.post('http://127.0.0.1:8000/api/register/', {
+      await axios.post('https://jobtracker-production-5259.up.railway.app/api/register/', {
         username: form.username,
         email: form.email,
         password: form.password

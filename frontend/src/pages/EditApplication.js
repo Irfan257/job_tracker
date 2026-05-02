@@ -24,7 +24,7 @@ function EditApplication() {
 
   const fetchApplication = async () => {
     try {
-      const response = await axios.get(`http://127.0.0.1:8000/api/applications/${id}/`, {
+      const response = await axios.get(`https://jobtracker-production-5259.up.railway.app/api/applications/${id}/`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setForm(response.data);
@@ -39,7 +39,7 @@ function EditApplication() {
 
   const handleSubmit = async () => {
     try {
-      await axios.put(`http://127.0.0.1:8000/api/applications/${id}/`, form, {
+      await axios.put(`https://jobtracker-production-5259.up.railway.app/api/applications/${id}/`, form, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setSuccess('Application updated successfully!');
@@ -53,7 +53,7 @@ function EditApplication() {
   const handleDelete = async () => {
     if (window.confirm('Are you sure you want to delete this application?')) {
       try {
-        await axios.delete(`http://127.0.0.1:8000/api/applications/${id}/`, {
+        await axios.delete(`https://jobtracker-production-5259.up.railway.app/api/applications/${id}/`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         window.location.href = '/dashboard';

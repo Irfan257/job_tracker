@@ -8,7 +8,7 @@ function Login() {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/token/', {
+      const response = await axios.post('https://jobtracker-production-5259.up.railway.app/api/token/', {
         username,
         password
       });

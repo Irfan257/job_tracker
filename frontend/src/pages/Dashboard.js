@@ -14,7 +14,7 @@ function Dashboard() {
 
   const fetchApplications = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:8000/api/applications/', {
+      const response = await axios.get('https://jobtracker-production-5259.up.railway.app/api/applications/', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setApplications(response.data);

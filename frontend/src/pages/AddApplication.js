@@ -32,7 +32,7 @@ function AddApplication() {
         follow_up_date: form.follow_up_date || null,
         notes: form.notes || '',
       };
-      await axios.post('http://127.0.0.1:8000/api/applications/', data, {
+      await axios.post('https://jobtracker-production-5259.up.railway.app/api/applications/', data, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setSuccess('Application added successfully!');

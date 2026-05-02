@@ -4,7 +4,7 @@ module.exports = function(app) {
   app.use(
     '/api',
     createProxyMiddleware({
-      target: 'http://127.0.0.1:8000',
+      target: 'https://jobtracker-production-5259.up.railway.app',
       changeOrigin: true,
     })
   );
