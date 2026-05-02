@@ -8,8 +8,9 @@ function Dashboard() {
   const [filter, setFilter] = useState('All');
   const token = localStorage.getItem('access');
 
-  useEffect(() => {
+useEffect(() => {
     fetchApplications();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchApplications = async () => {

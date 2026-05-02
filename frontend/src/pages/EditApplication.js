@@ -18,8 +18,9 @@ function EditApplication() {
   const [success, setSuccess] = useState('');
   const [error, setError] = useState('');
 
-  useEffect(() => {
+useEffect(() => {
     fetchApplication();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchApplication = async () => {
