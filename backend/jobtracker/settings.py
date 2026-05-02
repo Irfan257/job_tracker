@@ -154,6 +154,7 @@ SIMPLE_JWT = {
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
+    "https://job-tracker-irfan257-2180s-projects.vercel.app",
 ]
 
 
